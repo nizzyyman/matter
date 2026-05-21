@@ -153,18 +153,28 @@ function ClientPage({ client }) {
         </div>
       </nav>
 
-      <section className="client-page__hero">
-        <a className="client-page__back" href="/#work" onClick={navigate}>
-          Matter Studios Earth
-        </a>
-        <h1>{client.name}</h1>
-        <p>{client.description}</p>
-      </section>
+      <section className="client-page__hero" aria-label={`${client.name} work`}>
+        <div className="client-page__carousel" aria-hidden="true">
+          {client.columns.map((column, columnIndex) => (
+            <InfiniteSlider
+              direction="vertical"
+              reverse={columnIndex % 2 === 1}
+              speedOnHover={24}
+              gap={14}
+              playOnHover={false}
+              key={columnIndex}
+            >
+              {column.map((item) => (
+                <figure className={`client-page__tile ${item}`} key={item} />
+              ))}
+            </InfiniteSlider>
+          ))}
+        </div>
 
-      <section className="client-page__media" aria-label={`${client.name} work`}>
-        {client.media.map((item) => (
-          <figure className={item} key={item} />
-        ))}
+        <div className="client-page__content">
+          <h1>{client.name}</h1>
+          <p>{client.description}</p>
+        </div>
       </section>
     </main>
   );
@@ -215,19 +225,34 @@ const clientPages = [
     name: "LALO Tequila",
     href: "/clients/lalo-tequila",
     description: "Brand identity, art direction, and positioning.",
-    media: ["wide", "portrait", "square", "wide"],
+    columns: [
+      ["tall", "square", "wide", "portrait"],
+      ["square", "portrait", "tall", "wide"],
+      ["wide", "square", "portrait", "tall"],
+      ["portrait", "wide", "square", "tall"],
+    ],
   },
   {
     name: "Float Lab",
     href: "/clients/float-lab",
     description: "Brand identity, art direction, and positioning.",
-    media: ["portrait", "wide", "square", "wide"],
+    columns: [
+      ["square", "tall", "portrait", "wide"],
+      ["wide", "square", "tall", "portrait"],
+      ["portrait", "wide", "square", "tall"],
+      ["tall", "portrait", "wide", "square"],
+    ],
   },
   {
     name: "Mandrake Hotel",
     href: "/clients/mandrake-hotel",
     description: "Brand identity, art direction, and positioning.",
-    media: ["wide", "square", "portrait", "wide"],
+    columns: [
+      ["portrait", "wide", "square", "tall"],
+      ["tall", "square", "wide", "portrait"],
+      ["square", "portrait", "tall", "wide"],
+      ["wide", "tall", "portrait", "square"],
+    ],
   },
 ];
 

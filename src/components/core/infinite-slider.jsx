@@ -1,11 +1,26 @@
 import React from "react";
 
-export function InfiniteSlider({ children, speedOnHover = 18, gap = 24 }) {
+export function InfiniteSlider({
+  children,
+  direction = "horizontal",
+  reverse = false,
+  speedOnHover = 18,
+  gap = 24,
+  playOnHover = true,
+}) {
   const items = React.Children.toArray(children);
+  const className = [
+    "infinite-slider",
+    `infinite-slider--${direction}`,
+    reverse ? "infinite-slider--reverse" : "",
+    playOnHover ? "infinite-slider--hover" : "infinite-slider--play",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div
-      className="infinite-slider"
+      className={className}
       style={{
         "--slider-gap": `${gap}px`,
         "--slider-duration": `${speedOnHover}s`,

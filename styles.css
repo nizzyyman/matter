@@ -317,7 +317,12 @@ a {
 
 .infinite-slider {
   width: 100%;
+  height: auto;
   overflow: hidden;
+}
+
+.infinite-slider--vertical {
+  height: 100%;
 }
 
 .infinite-slider__track {
@@ -328,7 +333,19 @@ a {
   will-change: transform;
 }
 
-.project-row:hover .infinite-slider__track {
+.infinite-slider--vertical .infinite-slider__track {
+  width: 100%;
+  height: max-content;
+  flex-direction: column;
+  animation-name: infinite-slide-vertical;
+}
+
+.infinite-slider--reverse .infinite-slider__track {
+  animation-direction: reverse;
+}
+
+.infinite-slider--play .infinite-slider__track,
+.project-row:hover .infinite-slider--hover .infinite-slider__track {
   animation-play-state: var(--slider-play-state);
 }
 
@@ -341,6 +358,12 @@ a {
   flex: 0 0 auto;
   gap: var(--slider-gap);
   padding-right: var(--slider-gap);
+}
+
+.infinite-slider--vertical .infinite-slider__set {
+  flex-direction: column;
+  padding-right: 0;
+  padding-bottom: var(--slider-gap);
 }
 
 .tile {
@@ -437,65 +460,84 @@ a {
 
 .client-page {
   min-height: 100svh;
-  background: var(--paper);
-  color: var(--black);
+  background: var(--black);
+  color: var(--paper);
 }
 
 .client-page__nav {
-  background: rgba(248, 245, 235, 0.94);
+  position: fixed;
+  background: transparent;
+  color: var(--paper);
+  left: 0;
+  right: 0;
 }
 
 .client-page__hero {
-  padding: 70px 16px 42px;
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
 }
 
-.client-page__back {
-  display: inline-block;
-  margin-bottom: 24px;
-  font-size: 18px;
-  font-weight: 400;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 3px;
+.client-page__carousel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  padding: 0 14px;
+  opacity: 0.62;
 }
 
-.client-page__hero h1 {
+.client-page__content {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  right: 16px;
+  bottom: 18px;
+  color: var(--paper);
+}
+
+.client-page__content h1 {
+  max-width: 1200px;
   margin: 0;
-  font-size: clamp(64px, 15vw, 220px);
+  font-size: clamp(64px, 16vw, 230px);
   font-weight: 800;
   line-height: 0.86;
 }
 
-.client-page__hero p {
+.client-page__content p {
   max-width: 650px;
-  margin: 24px 0 0;
+  margin: 22px 0 0;
   font-size: clamp(22px, 2.4vw, 38px);
   font-weight: 400;
   line-height: 1;
 }
 
-.client-page__media {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
-  padding: 16px;
-}
-
-.client-page__media figure {
-  min-height: 360px;
+.client-page__tile {
+  width: 100%;
+  min-height: 30svh;
   margin: 0;
-  background: var(--black);
+  background: var(--paper);
 }
 
-.client-page__media .wide {
-  grid-column: span 6;
+.client-page__tile.square {
+  aspect-ratio: 1;
+  min-height: auto;
 }
 
-.client-page__media .portrait {
-  grid-column: span 3;
+.client-page__tile.portrait {
+  aspect-ratio: 3 / 4;
+  min-height: auto;
 }
 
-.client-page__media .square {
-  grid-column: span 3;
+.client-page__tile.tall {
+  aspect-ratio: 2.6 / 4;
+  min-height: auto;
+}
+
+.client-page__tile.wide {
+  aspect-ratio: 4 / 2.45;
+  min-height: auto;
 }
 
 @media (max-width: 850px) {
@@ -554,22 +596,25 @@ a {
     flex-basis: 280px;
   }
 
-  .client-page__hero {
-    padding: 48px 14px 30px;
+  .client-page__carousel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0 10px;
   }
 
-  .client-page__media {
-    grid-template-columns: 1fr;
+  .client-page__content {
+    left: 14px;
+    right: 14px;
+    bottom: 18px;
   }
 
-  .client-page__media .wide,
-  .client-page__media .portrait,
-  .client-page__media .square {
-    grid-column: 1;
+  .client-page__content h1 {
+    font-size: clamp(54px, 19vw, 118px);
   }
 
-  .client-page__media figure {
-    min-height: 260px;
+  .client-page__content p {
+    max-width: 360px;
+    font-size: 22px;
   }
 }
 
@@ -583,11 +628,22 @@ a {
   }
 }
 
+@keyframes infinite-slide-vertical {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-33.3333%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero__video {
     display: none;
   }
 
+  .infinite-slider--play .infinite-slider__track,
   .project-row:hover .infinite-slider__track,
   .infinite-slider__track {
     animation-play-state: paused;
