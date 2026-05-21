@@ -198,13 +198,12 @@ a {
   align-items: flex-start;
   gap: clamp(12px, 1.6vw, 28px);
   color: #ffffff;
-  font-family: var(--sans);
+  font-family: "Test Founders Grotesk", var(--sans);
   letter-spacing: 0;
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.28);
 }
 
 .hero__title-main {
-  font-family: "Test Founders Grotesk", var(--sans);
   font-size: clamp(92px, 18vw, 260px);
   font-weight: 400;
   line-height: 0.9;
@@ -214,7 +213,7 @@ a {
 .hero__title-exponent {
   display: flex;
   flex-direction: column;
-  padding-top: clamp(6px, 0.9vw, 18px);
+  padding-top: 0;
   font-size: clamp(28px, 3.2vw, 74px);
   font-weight: 400;
   line-height: 1.12;
@@ -568,7 +567,7 @@ a {
   }
 
   .hero__title-exponent {
-    padding-top: clamp(4px, 1vw, 10px);
+    padding-top: 0;
     font-size: clamp(17px, 4.8vw, 38px);
   }
 
