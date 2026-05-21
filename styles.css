@@ -460,41 +460,21 @@ a {
 
 .client-page {
   min-height: 100svh;
-  background: var(--black);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--black);
 }
 
 .client-page__nav {
-  position: fixed;
-  background: transparent;
-  color: var(--paper);
-  left: 0;
-  right: 0;
+  background: rgba(248, 245, 235, 0.94);
+  color: var(--black);
 }
 
 .client-page__hero {
-  position: relative;
-  min-height: 100svh;
-  overflow: hidden;
-}
-
-.client-page__carousel {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  padding: 0 14px;
-  opacity: 0.62;
+  padding: 52px 16px 34px;
 }
 
 .client-page__content {
-  position: absolute;
-  z-index: 2;
-  left: 16px;
-  right: 16px;
-  bottom: 18px;
-  color: var(--paper);
+  color: var(--black);
 }
 
 .client-page__content h1 {
@@ -513,11 +493,25 @@ a {
   line-height: 1;
 }
 
+.client-page__carousel {
+  height: calc(100svh - 290px);
+  min-height: 360px;
+  overflow: hidden;
+}
+
+.client-page__carousel-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  height: 100%;
+  padding: 0 14px 14px;
+}
+
 .client-page__tile {
   width: 100%;
   min-height: 30svh;
   margin: 0;
-  background: var(--paper);
+  background: var(--black);
 }
 
 .client-page__tile.square {
@@ -596,16 +590,19 @@ a {
     flex-basis: 280px;
   }
 
-  .client-page__carousel {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    padding: 0 10px;
+  .client-page__hero {
+    padding: 34px 14px 24px;
   }
 
-  .client-page__content {
-    left: 14px;
-    right: 14px;
-    bottom: 18px;
+  .client-page__carousel {
+    height: calc(100svh - 245px);
+    min-height: 320px;
+  }
+
+  .client-page__carousel-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0 10px 10px;
   }
 
   .client-page__content h1 {

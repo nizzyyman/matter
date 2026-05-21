@@ -153,8 +153,15 @@ function ClientPage({ client }) {
         </div>
       </nav>
 
-      <section className="client-page__hero" aria-label={`${client.name} work`}>
-        <div className="client-page__carousel" aria-hidden="true">
+      <section className="client-page__hero">
+        <div className="client-page__content">
+          <h1>{client.name}</h1>
+          <p>{client.description}</p>
+        </div>
+      </section>
+
+      <section className="client-page__carousel" aria-label={`${client.name} work`}>
+        <div className="client-page__carousel-grid" aria-hidden="true">
           {client.columns.map((column, columnIndex) => (
             <InfiniteSlider
               direction="vertical"
@@ -169,11 +176,6 @@ function ClientPage({ client }) {
               ))}
             </InfiniteSlider>
           ))}
-        </div>
-
-        <div className="client-page__content">
-          <h1>{client.name}</h1>
-          <p>{client.description}</p>
         </div>
       </section>
     </main>
