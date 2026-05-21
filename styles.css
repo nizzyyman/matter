@@ -478,19 +478,20 @@ a {
 }
 
 .client-page__content h1 {
-  max-width: 1200px;
+  max-width: none;
   margin: 0;
-  font-size: clamp(64px, 16vw, 230px);
+  font-size: clamp(64px, 11.5vw, 166px);
   font-weight: 800;
   line-height: 0.86;
+  white-space: nowrap;
 }
 
 .client-page__content p {
-  max-width: 650px;
-  margin: 22px 0 0;
-  font-size: clamp(22px, 2.4vw, 38px);
+  max-width: 420px;
+  margin: 18px 0 0;
+  font-size: clamp(16px, 1.35vw, 20px);
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.08;
 }
 
 .client-page__carousel {
@@ -606,12 +607,12 @@ a {
   }
 
   .client-page__content h1 {
-    font-size: clamp(54px, 19vw, 118px);
+    font-size: clamp(42px, 13.5vw, 88px);
   }
 
   .client-page__content p {
-    max-width: 360px;
-    font-size: 22px;
+    max-width: 300px;
+    font-size: 16px;
   }
 }
 
