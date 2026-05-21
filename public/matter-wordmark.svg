@@ -1,0 +1,22 @@
+<svg width="1600" height="260" viewBox="0 0 1600 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @font-face {
+        font-family: "Test Founders Grotesk";
+        src: url("/fonts/test-founders-grotesk-regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      text {
+        fill: #fff;
+        font-family: "Test Founders Grotesk", "Helvetica Neue", Arial, sans-serif;
+        font-weight: 400;
+        letter-spacing: 0;
+      }
+    </style>
+  </defs>
+  <text x="0" y="225" font-size="300">matter</text>
+  <text x="1186" y="80" font-size="70">studios</text>
+  <text x="1186" y="154" font-size="70">earth</text>
+</svg>
