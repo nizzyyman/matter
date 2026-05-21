@@ -161,7 +161,7 @@ function ClientPage({ client }) {
       </section>
 
       <section className="client-page__carousel" aria-label={`${client.name} work`}>
-        <InfiniteSlider speedOnHover={24} gap={14} playOnHover={false}>
+        <InfiniteSlider speedOnHover={60} gap={14} playOnHover={false}>
           {client.media.map((item, itemIndex) => (
             <figure
               className={`client-page__tile ${item}`}
