@@ -161,22 +161,14 @@ function ClientPage({ client }) {
       </section>
 
       <section className="client-page__carousel" aria-label={`${client.name} work`}>
-        <div className="client-page__carousel-grid" aria-hidden="true">
-          {client.columns.map((column, columnIndex) => (
-            <InfiniteSlider
-              direction="vertical"
-              reverse={columnIndex % 2 === 1}
-              speedOnHover={24}
-              gap={14}
-              playOnHover={false}
-              key={columnIndex}
-            >
-              {column.map((item) => (
-                <figure className={`client-page__tile ${item}`} key={item} />
-              ))}
-            </InfiniteSlider>
+        <InfiniteSlider speedOnHover={24} gap={14} playOnHover={false}>
+          {client.media.map((item, itemIndex) => (
+            <figure
+              className={`client-page__tile ${item}`}
+              key={`${item}-${itemIndex}`}
+            />
           ))}
-        </div>
+        </InfiniteSlider>
       </section>
     </main>
   );
@@ -227,34 +219,19 @@ const clientPages = [
     name: "LALO Tequila",
     href: "/clients/lalo-tequila",
     description: "Brand identity, art direction, and positioning.",
-    columns: [
-      ["tall", "square", "wide", "portrait"],
-      ["square", "portrait", "tall", "wide"],
-      ["wide", "square", "portrait", "tall"],
-      ["portrait", "wide", "square", "tall"],
-    ],
+    media: ["wide", "portrait", "square", "tall", "wide", "portrait"],
   },
   {
     name: "Float Lab",
     href: "/clients/float-lab",
     description: "Brand identity, art direction, and positioning.",
-    columns: [
-      ["square", "tall", "portrait", "wide"],
-      ["wide", "square", "tall", "portrait"],
-      ["portrait", "wide", "square", "tall"],
-      ["tall", "portrait", "wide", "square"],
-    ],
+    media: ["portrait", "wide", "square", "wide", "tall", "square"],
   },
   {
     name: "Mandrake Hotel",
     href: "/clients/mandrake-hotel",
     description: "Brand identity, art direction, and positioning.",
-    columns: [
-      ["portrait", "wide", "square", "tall"],
-      ["tall", "square", "wide", "portrait"],
-      ["square", "portrait", "tall", "wide"],
-      ["wide", "tall", "portrait", "square"],
-    ],
+    media: ["wide", "square", "portrait", "tall", "wide", "square"],
   },
 ];
 
