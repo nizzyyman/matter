@@ -1,111 +1,235 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Agentation } from "agentation";
 import { InfiniteSlider } from "./components/core/infinite-slider";
 import "../styles.css";
 
 function App() {
+  const pathname = usePathname();
+  const client = clientPages.find((item) => item.href === pathname);
+
+  if (client) {
+    return (
+      <>
+        <ClientPage client={client} />
+        <Agentation />
+      </>
+    );
+  }
+
   return (
     <>
-      <main>
-        <section className="hero" aria-label="Matter Studios Earth introduction">
-          <video
-            className="hero__video"
-            autoPlay
-            loop
-            muted
-            playsInline
-            aria-hidden="true"
-            ref={(el) => {
-              if (
-                el &&
-                window.matchMedia("(prefers-reduced-motion: reduce)").matches
-              ) {
-                el.pause();
-              }
-            }}
-          >
-            <source src="/hero-loop.mp4" type="video/mp4" />
-          </video>
-
-          <div className="hero__backdrop">
-            <div className="hero__orb hero__orb--one" />
-            <div className="hero__orb hero__orb--two" />
-            <div className="hero__orb hero__orb--three" />
-            <div className="hero__grain" />
-          </div>
-
-          <h1 className="hero__title">MATTER</h1>
-
-          <header className="hero__copy">
-            <p>
-              Matter Studios is an artist-led branding studio. We work with
-              companies building new worlds across the arts, culture, and
-              technology. Matter integrates a deeply intentional approach to
-              visual storytelling, translating the distinct essence of each
-              client through art direction, visual identity, and positioning.
-            </p>
-            <p>
-              Select Clients include LALO Tequila, Float Lab, and Mandrake
-              Hotel. 
-              <br /> 
-              <a href="#work">WORK</a>{" "}
-              <a href="mailto:hello@matter.earth">CONTACT</a>.
-            </p>
-          </header>
-
-          <div className="scroll-pill" aria-hidden="true" />
-        </section>
-
-        <section className="work" id="work" aria-label="Selected brand work">
-          <nav className="topbar" aria-label="Portfolio navigation">
-            <div className="nav-links">
-              <a href="#work" className="muted">WORK</a>
-              <a href="mailto:hello@matter.earth">CONTACT</a>
-            </div>
-          </nav>
-
-          <h2>Selected Work</h2>
-
-          <div className="filters" aria-label="Work filters">
-            <button className="active" type="button">ALL</button>
-          </div>
-
-          <div className="work-index">
-            {projects.map((project) => (
-              <article className="project-row" key={project.title}>
-                <div className="project-meta">
-                  <div className="project-client">{project.client}</div>
-                  <p className="project-description">{project.description}</p>
-                </div>
-                <div className="project-gallery">
-                  <InfiniteSlider speedOnHover={18} gap={10}>
-                    {project.tiles.map((tile) => (
-                      <figure
-                        className={`tile ${tile.className}`}
-                        key={tile.label}
-                        aria-label={tile.label}
-                      />
-                    ))}
-                  </InfiniteSlider>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="studio" id="studio">
-          <p>
-            Matter Studios Earth makes brand systems for regenerative products,
-            cultural platforms and organizations building a more careful world.
-          </p>
-        </section>
-      </main>
-
+      <HomePage />
       <Agentation />
     </>
   );
 }
+
+function HomePage() {
+  useEffect(() => {
+    if (window.location.hash) {
+      document.querySelector(window.location.hash)?.scrollIntoView();
+    }
+  }, []);
+
+  return (
+    <main>
+      <section className="hero" aria-label="Matter Studios Earth introduction">
+        <video
+          className="hero__video"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+          ref={(el) => {
+            if (
+              el &&
+              window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ) {
+              el.pause();
+            }
+          }}
+        >
+          <source src="/hero-loop.mp4" type="video/mp4" />
+        </video>
+
+        <div className="hero__backdrop">
+          <div className="hero__orb hero__orb--one" />
+          <div className="hero__orb hero__orb--two" />
+          <div className="hero__orb hero__orb--three" />
+          <div className="hero__grain" />
+        </div>
+
+        <h1 className="hero__title" aria-label="Matter Studios Earth">
+          <span className="hero__title-main">MATTER</span>
+          <span className="hero__title-exponent">
+            <span>STUDIOS</span>
+            <span>EARTH</span>
+          </span>
+        </h1>
+
+        <header className="hero__copy">
+          <p>
+            Matter Studios is an artist-led branding studio. We work with
+            companies building new worlds across the arts, culture, and
+            technology. Matter integrates a deeply intentional approach to visual
+            storytelling, translating the distinct essence of each client through
+            art direction, visual identity, and positioning.
+          </p>
+          <p>
+            Select Clients include{" "}
+            <ClientLink slug="lalo-tequila">LALO Tequila</ClientLink>,{" "}
+            <ClientLink slug="float-lab">Float Lab</ClientLink>, and{" "}
+            <ClientLink slug="mandrake-hotel">Mandrake Hotel</ClientLink>.
+          </p>
+        </header>
+
+        <div className="scroll-pill" aria-hidden="true" />
+      </section>
+
+      <section className="work" id="work" aria-label="Selected brand work">
+        <nav className="topbar" aria-label="Portfolio navigation">
+          <div className="nav-links">
+            <a href="#work" className="muted">WORK</a>
+            <a href="mailto:hello@matter.earth">CONTACT</a>
+          </div>
+        </nav>
+
+        <h2>Work</h2>
+
+        <div className="filters" aria-label="Work filters">
+          <button className="active" type="button">ALL</button>
+        </div>
+
+        <div className="work-index">
+          {projects.map((project) => (
+            <article className="project-row" key={project.title}>
+              <div className="project-meta">
+                <div className="project-client">{project.client}</div>
+                <p className="project-description">{project.description}</p>
+              </div>
+              <div className="project-gallery">
+                <InfiniteSlider speedOnHover={18} gap={10}>
+                  {project.tiles.map((tile) => (
+                    <figure
+                      className={`tile ${tile.className}`}
+                      key={tile.label}
+                      aria-label={tile.label}
+                    />
+                  ))}
+                </InfiniteSlider>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="studio" id="studio">
+        <p>
+          Matter Studios Earth makes brand systems for regenerative products,
+          cultural platforms and organizations building a more careful world.
+        </p>
+      </section>
+    </main>
+  );
+}
+
+function ClientLink({ slug, children }) {
+  return (
+    <a className="hero__client-link" href={`/clients/${slug}`} onClick={navigate}>
+      {children}
+    </a>
+  );
+}
+
+function ClientPage({ client }) {
+  return (
+    <main className="client-page">
+      <nav className="topbar client-page__nav" aria-label="Client navigation">
+        <div className="nav-links">
+          <a href="/#work" onClick={navigate}>WORK</a>
+          <a href="mailto:hello@matter.earth">CONTACT</a>
+        </div>
+      </nav>
+
+      <section className="client-page__hero">
+        <a className="client-page__back" href="/#work" onClick={navigate}>
+          Matter Studios Earth
+        </a>
+        <h1>{client.name}</h1>
+        <p>{client.description}</p>
+      </section>
+
+      <section className="client-page__media" aria-label={`${client.name} work`}>
+        {client.media.map((item) => (
+          <figure className={item} key={item} />
+        ))}
+      </section>
+    </main>
+  );
+}
+
+function usePathname() {
+  const [pathname, setPathname] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const updatePathname = () => setPathname(window.location.pathname);
+
+    window.addEventListener("popstate", updatePathname);
+    return () => window.removeEventListener("popstate", updatePathname);
+  }, []);
+
+  return pathname;
+}
+
+function navigate(event) {
+  const url = new URL(event.currentTarget.href);
+
+  if (
+    url.origin !== window.location.origin ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  window.dispatchEvent(new Event("popstate"));
+
+  window.setTimeout(() => {
+    if (url.hash) {
+      document.querySelector(url.hash)?.scrollIntoView();
+      return;
+    }
+
+    window.scrollTo({ top: 0 });
+  }, 0);
+}
+
+const clientPages = [
+  {
+    name: "LALO Tequila",
+    href: "/clients/lalo-tequila",
+    description: "Brand identity, art direction, and positioning.",
+    media: ["wide", "portrait", "square", "wide"],
+  },
+  {
+    name: "Float Lab",
+    href: "/clients/float-lab",
+    description: "Brand identity, art direction, and positioning.",
+    media: ["portrait", "wide", "square", "wide"],
+  },
+  {
+    name: "Mandrake Hotel",
+    href: "/clients/mandrake-hotel",
+    description: "Brand identity, art direction, and positioning.",
+    media: ["wide", "square", "portrait", "wide"],
+  },
+];
 
 const projects = [
   {
