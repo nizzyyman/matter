@@ -188,7 +188,6 @@ a {
 }
 
 .hero__title {
-  --matter-cap-height: clamp(92px, 18vw, 260px);
   position: absolute;
   z-index: 2;
   left: clamp(16px, 2.4vw, 36px);
@@ -200,27 +199,10 @@ a {
 
 .hero__wordmark {
   display: block;
-  width: auto;
+  width: min(94vw, 1600px);
   max-width: 100%;
-  height: var(--matter-cap-height);
-  overflow: visible;
+  height: auto;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
-}
-
-.hero__wordmark text {
-  fill: #ffffff;
-  font-family: "Test Founders Grotesk", var(--sans);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-rendering: geometricPrecision;
-}
-
-.hero__wordmark-main {
-  font-size: 260px;
-}
-
-.hero__wordmark-exponent text {
-  font-size: 58px;
 }
 
 .scroll-pill {
@@ -557,7 +539,6 @@ a {
   }
 
   .hero__title {
-    --matter-cap-height: clamp(58px, 17vw, 132px);
     left: 18px;
     right: 18px;
     bottom: 18px;

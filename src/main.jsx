@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Agentation } from "agentation";
 import { InfiniteSlider } from "./components/core/infinite-slider";
@@ -130,56 +130,14 @@ function HomePage() {
 }
 
 function HeroWordmark() {
-  const mainRef = useRef(null);
-  const [exponentX, setExponentX] = useState(1080);
-
-  useLayoutEffect(() => {
-    let cancelled = false;
-
-    const measure = () => {
-      if (!mainRef.current) {
-        return;
-      }
-
-      const mainBox = mainRef.current.getBBox();
-      const nextExponentX = mainBox.x + mainBox.width + 24;
-
-      if (!cancelled) {
-        setExponentX((current) =>
-          Math.abs(current - nextExponentX) < 0.5 ? current : nextExponentX
-        );
-      }
-    };
-
-    requestAnimationFrame(measure);
-    if (document.fonts) {
-      document.fonts.ready.then(measure);
-    }
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   return (
     <h1 className="hero__title" aria-label="matter studios earth">
-      <svg
+      <img
         className="hero__wordmark"
-        viewBox="0 0 1420 205"
-        preserveAspectRatio="xMinYMin meet"
+        src="/matter-wordmark.svg"
+        alt=""
         aria-hidden="true"
-      >
-        <text ref={mainRef} className="hero__wordmark-main" x="0" y="188">
-          matter
-        </text>
-        <g
-          className="hero__wordmark-exponent"
-          transform={`translate(${exponentX} 0)`}
-        >
-          <text x="0" y="42">studios</text>
-          <text x="0" y="106">earth</text>
-        </g>
-      </svg>
+      />
     </h1>
   );
 }
