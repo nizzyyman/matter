@@ -34,7 +34,7 @@ function HomePage() {
 
   return (
     <main>
-      <section className="hero" aria-label="Matter Studios Earth introduction">
+      <section className="hero" aria-label="matter studios earth introduction">
         <video
           className="hero__video"
           autoPlay
@@ -131,56 +131,22 @@ function HomePage() {
 
 function HeroWordmark() {
   const mainRef = useRef(null);
-  const studiosRef = useRef(null);
-  const earthRef = useRef(null);
-  const [layout, setLayout] = useState({
-    earthY: 64,
-    exponentX: 940,
-    exponentY: -196,
-    viewBox: "0 -205 1320 215",
-  });
+  const [exponentX, setExponentX] = useState(1080);
 
   useLayoutEffect(() => {
     let cancelled = false;
 
     const measure = () => {
-      if (!mainRef.current || !studiosRef.current || !earthRef.current) {
+      if (!mainRef.current) {
         return;
       }
 
       const mainBox = mainRef.current.getBBox();
-      const studiosBox = studiosRef.current.getBBox();
-      const earthBox = earthRef.current.getBBox();
-      const exponentGap = 22;
-      const exponentX = mainBox.x + mainBox.width + exponentGap;
-      const exponentY = mainBox.y - studiosBox.y;
-      const exponentLeft = exponentX + Math.min(studiosBox.x, earthBox.x);
-      const exponentRight =
-        exponentX +
-        Math.max(studiosBox.x + studiosBox.width, earthBox.x + earthBox.width);
-      const exponentTop =
-        exponentY + Math.min(studiosBox.y, earthBox.y);
-      const exponentBottom =
-        exponentY +
-        Math.max(studiosBox.y + studiosBox.height, earthBox.y + earthBox.height);
-      const left = Math.min(mainBox.x, exponentLeft);
-      const top = Math.min(mainBox.y, exponentTop);
-      const right = Math.max(mainBox.x + mainBox.width, exponentRight);
-      const bottom = Math.max(mainBox.y + mainBox.height, exponentBottom);
-      const nextLayout = {
-        earthY: 64,
-        exponentX,
-        exponentY,
-        viewBox: `${left} ${top} ${right - left} ${bottom - top}`,
-      };
+      const nextExponentX = mainBox.x + mainBox.width + 24;
 
       if (!cancelled) {
-        setLayout((current) =>
-          current.viewBox === nextLayout.viewBox &&
-          current.exponentX === nextLayout.exponentX &&
-          current.exponentY === nextLayout.exponentY
-            ? current
-            : nextLayout
+        setExponentX((current) =>
+          Math.abs(current - nextExponentX) < 0.5 ? current : nextExponentX
         );
       }
     };
@@ -196,22 +162,22 @@ function HeroWordmark() {
   }, []);
 
   return (
-    <h1 className="hero__title" aria-label="Matter Studios Earth">
+    <h1 className="hero__title" aria-label="matter studios earth">
       <svg
         className="hero__wordmark"
-        viewBox={layout.viewBox}
+        viewBox="0 0 1420 205"
         preserveAspectRatio="xMinYMin meet"
         aria-hidden="true"
       >
-        <text ref={mainRef} className="hero__wordmark-main" x="0" y="0">
-          MATTER
+        <text ref={mainRef} className="hero__wordmark-main" x="0" y="188">
+          matter
         </text>
         <g
           className="hero__wordmark-exponent"
-          transform={`translate(${layout.exponentX} ${layout.exponentY})`}
+          transform={`translate(${exponentX} 0)`}
         >
-          <text ref={studiosRef} x="0" y="0">STUDIOS</text>
-          <text ref={earthRef} x="0" y={layout.earthY}>EARTH</text>
+          <text x="0" y="42">studios</text>
+          <text x="0" y="106">earth</text>
         </g>
       </svg>
     </h1>
