@@ -188,38 +188,39 @@ a {
 }
 
 .hero__title {
+  --matter-cap-height: clamp(92px, 18vw, 260px);
   position: absolute;
   z-index: 2;
   left: clamp(16px, 2.4vw, 36px);
   right: clamp(16px, 2.4vw, 36px);
   bottom: clamp(16px, 2.4vw, 36px);
   margin: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(12px, 1.6vw, 28px);
-  color: #ffffff;
+  line-height: 0;
+}
+
+.hero__wordmark {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: var(--matter-cap-height);
+  overflow: visible;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
+}
+
+.hero__wordmark text {
+  fill: #ffffff;
   font-family: "Test Founders Grotesk", var(--sans);
+  font-weight: 400;
   letter-spacing: 0;
-  line-height: 0.75;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.28);
+  text-rendering: geometricPrecision;
 }
 
-.hero__title-main {
-  font-size: clamp(92px, 18vw, 260px);
-  font-weight: 400;
-  line-height: inherit;
-  white-space: nowrap;
+.hero__wordmark-main {
+  font-size: 260px;
 }
 
-.hero__title-exponent {
-  display: flex;
-  flex-direction: column;
-  padding-top: 0;
-  font-size: clamp(24px, 3vw, 66px);
-  font-weight: 400;
-  line-height: inherit;
-  text-transform: uppercase;
-  white-space: nowrap;
+.hero__wordmark-exponent text {
+  font-size: 58px;
 }
 
 .scroll-pill {
@@ -556,20 +557,11 @@ a {
   }
 
   .hero__title {
+    --matter-cap-height: clamp(58px, 17vw, 132px);
     left: 18px;
     right: 18px;
     bottom: 18px;
-    gap: clamp(8px, 2vw, 14px);
     transform: none;
-  }
-
-  .hero__title-main {
-    font-size: clamp(58px, 17vw, 132px);
-  }
-
-  .hero__title-exponent {
-    padding-top: 0;
-    font-size: clamp(15px, 4.2vw, 32px);
   }
 
   .nav-links {

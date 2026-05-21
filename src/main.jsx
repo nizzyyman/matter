@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Agentation } from "agentation";
 import { InfiniteSlider } from "./components/core/infinite-slider";
@@ -61,13 +61,7 @@ function HomePage() {
           <div className="hero__grain" />
         </div>
 
-        <h1 className="hero__title" aria-label="Matter Studios Earth">
-          <span className="hero__title-main">MATTER</span>
-          <span className="hero__title-exponent">
-            <span>STUDIOS</span>
-            <span>EARTH</span>
-          </span>
-        </h1>
+        <HeroWordmark />
 
         <header className="hero__copy">
           <p>
@@ -132,6 +126,95 @@ function HomePage() {
         </p>
       </section>
     </main>
+  );
+}
+
+function HeroWordmark() {
+  const mainRef = useRef(null);
+  const studiosRef = useRef(null);
+  const earthRef = useRef(null);
+  const [layout, setLayout] = useState({
+    earthY: 64,
+    exponentX: 940,
+    exponentY: -196,
+    viewBox: "0 -205 1320 215",
+  });
+
+  useLayoutEffect(() => {
+    let cancelled = false;
+
+    const measure = () => {
+      if (!mainRef.current || !studiosRef.current || !earthRef.current) {
+        return;
+      }
+
+      const mainBox = mainRef.current.getBBox();
+      const studiosBox = studiosRef.current.getBBox();
+      const earthBox = earthRef.current.getBBox();
+      const exponentGap = 22;
+      const exponentX = mainBox.x + mainBox.width + exponentGap;
+      const exponentY = mainBox.y - studiosBox.y;
+      const exponentLeft = exponentX + Math.min(studiosBox.x, earthBox.x);
+      const exponentRight =
+        exponentX +
+        Math.max(studiosBox.x + studiosBox.width, earthBox.x + earthBox.width);
+      const exponentTop =
+        exponentY + Math.min(studiosBox.y, earthBox.y);
+      const exponentBottom =
+        exponentY +
+        Math.max(studiosBox.y + studiosBox.height, earthBox.y + earthBox.height);
+      const left = Math.min(mainBox.x, exponentLeft);
+      const top = Math.min(mainBox.y, exponentTop);
+      const right = Math.max(mainBox.x + mainBox.width, exponentRight);
+      const bottom = Math.max(mainBox.y + mainBox.height, exponentBottom);
+      const nextLayout = {
+        earthY: 64,
+        exponentX,
+        exponentY,
+        viewBox: `${left} ${top} ${right - left} ${bottom - top}`,
+      };
+
+      if (!cancelled) {
+        setLayout((current) =>
+          current.viewBox === nextLayout.viewBox &&
+          current.exponentX === nextLayout.exponentX &&
+          current.exponentY === nextLayout.exponentY
+            ? current
+            : nextLayout
+        );
+      }
+    };
+
+    requestAnimationFrame(measure);
+    if (document.fonts) {
+      document.fonts.ready.then(measure);
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <h1 className="hero__title" aria-label="Matter Studios Earth">
+      <svg
+        className="hero__wordmark"
+        viewBox={layout.viewBox}
+        preserveAspectRatio="xMinYMin meet"
+        aria-hidden="true"
+      >
+        <text ref={mainRef} className="hero__wordmark-main" x="0" y="0">
+          MATTER
+        </text>
+        <g
+          className="hero__wordmark-exponent"
+          transform={`translate(${layout.exponentX} ${layout.exponentY})`}
+        >
+          <text ref={studiosRef} x="0" y="0">STUDIOS</text>
+          <text ref={earthRef} x="0" y={layout.earthY}>EARTH</text>
+        </g>
+      </svg>
+    </h1>
   );
 }
 
