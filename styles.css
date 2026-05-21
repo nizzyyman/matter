@@ -503,6 +503,12 @@ a {
   height: 100%;
 }
 
+.client-page__carousel .infinite-slider__track,
+.client-page__carousel .infinite-slider__set {
+  height: 100%;
+  align-items: stretch;
+}
+
 .client-page__tile {
   flex: 0 0 clamp(430px, 40vw, 610px);
   width: clamp(430px, 40vw, 610px);
