@@ -16,6 +16,14 @@ function App() {
             muted
             playsInline
             aria-hidden="true"
+            ref={(el) => {
+              if (
+                el &&
+                window.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ) {
+                el.pause();
+              }
+            }}
           >
             <source src="/hero-loop.mp4" type="video/mp4" />
           </video>
@@ -26,6 +34,8 @@ function App() {
             <div className="hero__orb hero__orb--three" />
             <div className="hero__grain" />
           </div>
+
+          <h1 className="hero__title">MATTER</h1>
 
           <header className="hero__copy">
             <p>
@@ -44,7 +54,6 @@ function App() {
             </p>
           </header>
 
-          <h1 className="hero__title">MATTER</h1>
           <div className="scroll-pill" aria-hidden="true" />
         </section>
 
@@ -56,7 +65,7 @@ function App() {
             </div>
           </nav>
 
-          <h2>Matter Studios Earth</h2>
+          <h2>Selected Work</h2>
 
           <div className="filters" aria-label="Work filters">
             <button className="active" type="button">ALL</button>

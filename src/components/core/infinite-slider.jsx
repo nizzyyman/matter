@@ -9,6 +9,7 @@ export function InfiniteSlider({ children, speedOnHover = 18, gap = 24 }) {
       style={{
         "--slider-gap": `${gap}px`,
         "--slider-duration": `${speedOnHover}s`,
+        "--slider-play-state": "running",
       }}
     >
       <div className="infinite-slider__track">

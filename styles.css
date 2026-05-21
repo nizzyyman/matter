@@ -152,7 +152,7 @@ a {
 
 .hero__copy p {
   margin: 0;
-  color: #050505;
+  color: #ffffff;
   font-size: clamp(31px, 2.46vw, 51px);
   font-weight: 800;
   line-height: 0.99;
@@ -182,13 +182,14 @@ a {
   right: clamp(16px, 2.4vw, 36px);
   bottom: clamp(16px, 2.4vw, 36px);
   margin: 0;
-  color: #050505;
+  color: #ffffff;
   font-family: var(--sans);
   font-size: clamp(92px, 18vw, 260px);
   font-weight: 800;
   line-height: 0.9;
   letter-spacing: 0;
   white-space: nowrap;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.28);
 }
 
 .scroll-pill {
@@ -233,7 +234,7 @@ a {
 
 .nav-links .muted,
 .filters button:not(.active) {
-  color: rgba(11, 11, 10, 0.24);
+  color: rgba(11, 11, 10, 0.45);
 }
 
 .work h2 {
@@ -307,7 +308,11 @@ a {
 }
 
 .project-row:hover .infinite-slider__track {
-  animation-play-state: running;
+  animation-play-state: var(--slider-play-state);
+}
+
+.infinite-slider:focus-within .infinite-slider__track {
+  animation-play-state: paused;
 }
 
 .infinite-slider__set {
@@ -464,5 +469,16 @@ a {
 
   to {
     transform: translateX(-33.3333%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__video {
+    display: none;
+  }
+
+  .project-row:hover .infinite-slider__track,
+  .infinite-slider__track {
+    animation-play-state: paused;
   }
 }
